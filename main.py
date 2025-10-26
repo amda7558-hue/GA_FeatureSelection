@@ -23,30 +23,35 @@ st.markdown("""
 /* RTL direction */
 body, .block-container {direction: rtl; text-align: right;}
 
-/* خطوط وألوان */
-body {background-color: #F0F4F8; color: #1D3557; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-h1, h2, h3 {color: #1D3557; text-align: right;}
-p, li {color: #1D3557; font-size: 16px;}
+/* خلفية عامة */
+body {background-color: #F7F9FB; color: #212529; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+
+/* العناوين */
+h1, h2, h3 {color: #0D3B66; text-align: right;}
+
+/* النصوص العادية */
+p, li {color: #1D3557; font-size: 16px; line-height: 1.6;}
 
 /* أزرار */
 .stButton>button {
-    background-color: #457B9D;
-    color: white;
+    background-color: #1D3557;
+    color: #F1FAEE;
     border-radius: 8px;
     padding: 0.6em 1.2em;
     font-weight: bold;
+    transition: all 0.2s ease-in-out;
 }
 .stButton>button:hover {
-    background-color: #1D3557;
+    background-color: #457B9D;
     color: #F1FAEE;
 }
 
 /* جداول */
 .stDataFrame th {background-color: #A8DADC; color: #1D3557; text-align: center;}
-.stDataFrame td {background-color: #F1FAEE; color: #1D3557; text-align: center;}
+.stDataFrame td {background-color: #E6F0F3; color: #1D3557; text-align: center;}
 
 /* expanders */
-.stExpanderHeader {font-weight: bold; color: #1D3557;}
+.stExpanderHeader {font-weight: bold; color: #0D3B66;}
 </style>
 """, unsafe_allow_html=True)
 
