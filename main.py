@@ -192,14 +192,76 @@ h3 {
     border-color: #E76F51 transparent transparent transparent;
 }
 
-/* الكروت */
+/* الكروت - ألوان محسنة للقراءة */
 .card {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 15px;
     margin: 15px 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #E76F51;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-left: 5px solid;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: #2C3E50;
+    margin-top: 0;
+    font-size: 1.3rem;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.card p {
+    color: #5D6D7E;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* كرت الدقة - لون أخضر غامق */
+.card-accuracy {
+    border-left-color: #27AE60;
+    background: linear-gradient(135deg, #ffffff 0%, #E8F8F5 100%);
+}
+
+.card-accuracy h3 {
+    color: #27AE60;
+}
+
+/* كرت الكفاءة - لون أزرق غامق */
+.card-efficiency {
+    border-left-color: #2980B9;
+    background: linear-gradient(135deg, #ffffff 0%, #EBF5FB 100%);
+}
+
+.card-efficiency h3 {
+    color: #2980B9;
+}
+
+/* كرت المقارنة - لون بنفسجي غامق */
+.card-comparison {
+    border-left-color: #8E44AD;
+    background: linear-gradient(135deg, #ffffff 0%, #F4ECF7 100%);
+}
+
+.card-comparison h3 {
+    color: #8E44AD;
+}
+
+/* كرت التصور - لون برتقالي غامق */
+.card-visualization {
+    border-left-color: #E67E22;
+    background: linear-gradient(135deg, #ffffff 0%, #FEF9E7 100%);
+}
+
+.card-visualization h3 {
+    color: #E67E22;
 }
 
 </style>
@@ -261,12 +323,12 @@ if section == "🏠 الصفحة الرئيسية":
         </div>
         """, unsafe_allow_html=True)
     
-    # كروت المعلومات
+    # كروت المعلومات - بألوان محسنة للقراءة
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
-        <div class='card'>
+        <div class='card card-accuracy'>
             <h3>🎯 الدقة</h3>
             <p>تحسين أداء النماذج من خلال اختيار الميزات الأكثر تأثيراً</p>
         </div>
@@ -274,7 +336,7 @@ if section == "🏠 الصفحة الرئيسية":
     
     with col2:
         st.markdown("""
-        <div class='card'>
+        <div class='card card-efficiency'>
             <h3>⚡ الكفاءة</h3>
             <p>تقليل زمن التدريب والحوسبة باستخدام ميزات أقل</p>
         </div>
@@ -282,7 +344,7 @@ if section == "🏠 الصفحة الرئيسية":
     
     with col3:
         st.markdown("""
-        <div class='card'>
+        <div class='card card-comparison'>
             <h3>🔄 المقارنة</h3>
             <p>مقارنة مع الطرق التقليدية مثل RFE و SelectKBest</p>
         </div>
@@ -290,7 +352,7 @@ if section == "🏠 الصفحة الرئيسية":
     
     with col4:
         st.markdown("""
-        <div class='card'>
+        <div class='card card-visualization'>
             <h3>📈 التصور</h3>
             <p>عرض النتائج برسوم بيانية وجداول تفاعلية</p>
         </div>
