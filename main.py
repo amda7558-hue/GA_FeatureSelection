@@ -8,18 +8,63 @@ import json
 # ==========================
 st.set_page_config(
     page_title="BIA601 - Genetic Algorithm Feature Selection",
-    layout="wide"
+    layout="wide",
 )
+
+# ==========================
+# Custom CSS for better visuals
+# ==========================
+st.markdown("""
+<style>
+/* General font and background */
+body {
+    background-color: #F9F9F9;
+    color: #222222;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar styling */
+.css-1d391kg {  /* This class may change with Streamlit updates */
+    background-color: #E8F0F2;
+    padding: 1rem;
+}
+
+/* Table styling */
+.dataframe th {
+    background-color: #A8DADC;
+    color: #1D3557;
+    text-align: center;
+}
+
+.dataframe td {
+    background-color: #F1FAEE;
+    color: #1D3557;
+    text-align: center;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    color: #1D3557;
+}
+
+/* Success messages */
+.stAlert>div>div>div>div {
+    background-color: #C1F0C1 !important;
+    color: #1B3B1B !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================
 # Sidebar
 # ==========================
-st.sidebar.title("🧬 مشروع BIA601")
 st.sidebar.markdown("""
-**المادة:** BIA601 — Data Mining  
-**إشراف:** د. عصام سلمان  
-**الهدف:** عرض نتائج تطبيق الخوارزمية الجينية لاختيار الميزات المثلى ومقارنتها بالطرق التقليدية.
-""")
+<div style="text-align:center; background-color:#A8DADC; padding:10px; border-radius:10px;">
+<h2>🧬 مشروع BIA601</h2>
+<p style="color:#1D3557;">المادة: BIA601 — Data Mining<br>
+إشراف: د. عصام سلمان</p>
+</div>
+""", unsafe_allow_html=True)
 
 section = st.sidebar.radio(
     "اختر القسم الذي تريد عرضه:",
@@ -35,17 +80,22 @@ OUTPUT_DIR = "outputs"
 # Home Section
 # ==========================
 if section == "🏁 الصفحة الرئيسية":
-    st.title("🧬 مشروع BIA601 — اختيار الميزات باستخدام الخوارزمية الجينية")
     st.markdown("""
-    هذا التطبيق يعرض نتائج تطبيق **الخوارزمية الجينية لاختيار الميزات** مقارنة بالطرق التقليدية (RFE, SelectKBest, Full Feature Set).  
+    <div style="padding:20px; background-color:#F1FAEE; border-radius:10px;">
+    <h1>🧬 مشروع BIA601 — اختيار الميزات باستخدام الخوارزمية الجينية</h1>
+    <p style="font-size:18px; color:#1D3557;">
+    هذا التطبيق يعرض نتائج تطبيق <b>الخوارزمية الجينية لاختيار الميزات</b> مقارنة بالطرق التقليدية 
+    (RFE, SelectKBest, Full Feature Set).<br>
     استخدم القائمة الجانبية لاختيار القسم الذي تريد عرضه.
-    """)
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ==========================
 # 1️⃣ Results Before & After GA
 # ==========================
 elif section == "📊 النتائج قبل وبعد":
-    st.header("1️⃣ نتائج قبل وبعد تطبيق الخوارزمية الجينية")
+    st.markdown("## 1️⃣ نتائج قبل وبعد تطبيق الخوارزمية الجينية", unsafe_allow_html=True)
     before_after_path = os.path.join(OUTPUT_DIR, "before_after.csv")
     if os.path.exists(before_after_path):
         df_before_after = pd.read_csv(before_after_path)
@@ -57,7 +107,7 @@ elif section == "📊 النتائج قبل وبعد":
 # 2️⃣ Comparison Between Methods
 # ==========================
 elif section == "⚖️ مقارنة الطرق":
-    st.header("2️⃣ مقارنة الطرق المختلفة (Full vs GA vs SelectKBest vs RFE)")
+    st.markdown("## 2️⃣ مقارنة الطرق المختلفة (Full vs GA vs SelectKBest vs RFE)", unsafe_allow_html=True)
     comparison_path = os.path.join(OUTPUT_DIR, "comparison.csv")
     if os.path.exists(comparison_path):
         df_comparison = pd.read_csv(comparison_path)
@@ -69,7 +119,7 @@ elif section == "⚖️ مقارنة الطرق":
 # 3️⃣ Graphs
 # ==========================
 elif section == "📈 الرسوم البيانية":
-    st.header("3️⃣ الرسوم البيانية")
+    st.markdown("## 3️⃣ الرسوم البيانية", unsafe_allow_html=True)
     
     plots_info = {
         "ga_evolution.png": "تطور Fitness عبر الأجيال",
@@ -91,13 +141,13 @@ elif section == "📈 الرسوم البيانية":
             if os.path.exists(img_path):
                 st.image(img_path, caption=caption, use_container_width=True)
             else:
-                st.warning(f"الصورة {img_file} غير موجودة.")
+                st.warning(f"الصورة {img_file} غير موجود.")
 
 # ==========================
 # 4️⃣ Selected Features by GA
 # ==========================
 elif section == "✨ الميزات المختارة":
-    st.header("4️⃣ الميزات المختارة بالخوارزمية الجينية")
+    st.markdown("## 4️⃣ الميزات المختارة بالخوارزمية الجينية", unsafe_allow_html=True)
     features_path = os.path.join(OUTPUT_DIR, "selected_features.json")
     if os.path.exists(features_path):
         with open(features_path, "r", encoding="utf-8") as f:
@@ -112,10 +162,13 @@ elif section == "✨ الميزات المختارة":
 # ==========================
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-#### 📘 ملاحظات:
-- تم تنفيذ الخوارزمية الجينية لاختيار الميزات المثلى باستخدام نموذج التصنيف (Decision Tree أو Logistic Regression).
-- تم مقارنة النتائج مع خوارزميات تقليدية (RFE, SelectKBest).
-- جميع الرسوم والجداول تم توليدها آليًا من كود `ga_core.py`.
-
-© 2025 — مشروع مادة BIA601 | إعداد مجموعة طلاب المادة بإشراف د. عصام سلمان
-""")
+<div style="padding:10px; background-color:#F1FAEE; border-radius:10px; color:#1D3557;">
+<h4>📘 ملاحظات:</h4>
+<ul>
+<li>تم تنفيذ الخوارزمية الجينية لاختيار الميزات المثلى باستخدام نموذج التصنيف (Decision Tree أو Logistic Regression).</li>
+<li>تم مقارنة النتائج مع خوارزميات تقليدية (RFE, SelectKBest).</li>
+<li>جميع الرسوم والجداول تم توليدها آليًا من كود <b>ga_core.py</b>.</li>
+</ul>
+<p>© 2025 — مشروع مادة BIA601 | إعداد مجموعة طلاب المادة بإشراف د. عصام سلمان</p>
+</div>
+""", unsafe_allow_html=True)
