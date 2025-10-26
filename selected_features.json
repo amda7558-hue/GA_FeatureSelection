@@ -1,0 +1,16 @@
+[
+  "mean radius",
+  "mean texture",
+  "mean smoothness",
+  "mean symmetry",
+  "radius error",
+  "texture error",
+  "smoothness error",
+  "concavity error",
+  "fractal dimension error",
+  "worst texture",
+  "worst perimeter",
+  "worst concavity",
+  "worst concave points",
+  "worst symmetry"
+]

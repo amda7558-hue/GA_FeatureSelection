@@ -1,0 +1,5 @@
+Method,CV_Score,Metric,NumFeatures
+GA,0.9824406148113646,accuracy,14
+Full,0.9754230709517155,accuracy,30
+RFE(k=14),0.968390001552554,accuracy,14
+SelectKBest(k=14),0.9437975469647568,accuracy,14

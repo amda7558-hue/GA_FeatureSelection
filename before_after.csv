@@ -1,0 +1,3 @@
+Setting,Score,Metric,NumFeatures
+Full features,0.9754230709517155,accuracy,30
+GA-selected,0.9824406148113646,accuracy,14
