@@ -7,42 +7,76 @@ import sys
 
 OUTPUT_DIR = "outputs"
 
+# ---------------------------
+# إعدادات الصفحة
+# ---------------------------
 st.set_page_config(
     page_title="BIA601 - Genetic Algorithm Feature Selection",
     layout="wide"
 )
 
+# ---------------------------
+# CSS لتصميم RTL وألوان مريحة للعين
+# ---------------------------
 st.markdown("""
 <style>
-body {background-color: #FAFAFA; color: #1D3557; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-h1, h2, h3 {color: #1D3557;}
-.stButton>button {background-color: #457B9D; color: white; border-radius: 8px; padding: 0.5em 1em;}
-.stButton>button:hover {background-color: #1D3557; color: #F1FAEE;}
-.stDataFrame th {background-color: #A8DADC; color: #1D3557;}
-.stDataFrame td {background-color: #F1FAEE; color: #1D3557;}
+/* RTL direction */
+body, .block-container {direction: rtl; text-align: right;}
+
+/* خطوط وألوان */
+body {background-color: #F0F4F8; color: #1D3557; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+h1, h2, h3 {color: #1D3557; text-align: right;}
+p, li {color: #1D3557; font-size: 16px;}
+
+/* أزرار */
+.stButton>button {
+    background-color: #457B9D;
+    color: white;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-weight: bold;
+}
+.stButton>button:hover {
+    background-color: #1D3557;
+    color: #F1FAEE;
+}
+
+/* جداول */
+.stDataFrame th {background-color: #A8DADC; color: #1D3557; text-align: center;}
+.stDataFrame td {background-color: #F1FAEE; color: #1D3557; text-align: center;}
+
+/* expanders */
+.stExpanderHeader {font-weight: bold; color: #1D3557;}
 </style>
 """, unsafe_allow_html=True)
 
+# ---------------------------
+# الشريط الجانبي
+# ---------------------------
 st.sidebar.title("🧬 مشروع BIA601")
 section = st.sidebar.radio(
     "اختر القسم الذي تريد عرضه:",
     ("🏁 الصفحة الرئيسية", "📊 النتائج قبل وبعد", "⚖️ مقارنة الطرق", "📈 الرسوم البيانية", "✨ الميزات المختارة", "⚡ تشغيل الخوارزمية")
 )
 
-
+# ---------------------------
+# الصفحة الرئيسية
+# ---------------------------
 if section == "🏁 الصفحة الرئيسية":
     st.markdown("""
-    <div style="padding:20px; background-color:#F1FAEE; border-radius:10px;">
-    <h1>🧬 مشروع BIA601 — اختيار الميزات باستخدام الخوارزمية الجينية</h1>
-    <p style="font-size:18px; color:#1D3557;">
-    هذا التطبيق يعرض نتائج تطبيق <b>الخوارزمية الجينية لاختيار الميزات</b> مقارنة بالطرق التقليدية
-    (RFE, SelectKBest, Full Feature Set).<br>
-    استخدم القائمة الجانبية لاختيار القسم الذي تريد عرضه.
-    </p>
+    <div style="padding:20px; background-color:#E3F2FD; border-radius:12px;">
+        <h1>🧬 مشروع BIA601 — اختيار الميزات باستخدام الخوارزمية الجينية</h1>
+        <p>
+        هذا التطبيق يعرض نتائج تطبيق <b>الخوارزمية الجينية لاختيار الميزات</b> مقارنة بالطرق التقليدية
+        (RFE, SelectKBest, Full Feature Set).<br>
+        استخدم القائمة الجانبية لاختيار القسم الذي تريد عرضه.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
-
+# ---------------------------
+# تشغيل الخوارزمية
+# ---------------------------
 elif section == "⚡ تشغيل الخوارزمية":
     st.header("⚡ تشغيل الخوارزمية الجينية")
     with st.container():
@@ -61,6 +95,9 @@ elif section == "⚡ تشغيل الخوارزمية":
                 except Exception as e:
                     st.error(f"❌ خطأ غير متوقع: {e}")
 
+# ---------------------------
+# النتائج قبل وبعد
+# ---------------------------
 elif section == "📊 النتائج قبل وبعد":
     st.header("1️⃣ نتائج قبل وبعد تطبيق الخوارزمية الجينية")
     path = os.path.join(OUTPUT_DIR, "before_after.csv")
@@ -71,6 +108,9 @@ elif section == "📊 النتائج قبل وبعد":
     else:
         st.warning("ملف before_after.csv غير موجود. شغّل الخوارزمية أولاً.")
 
+# ---------------------------
+# مقارنة الطرق
+# ---------------------------
 elif section == "⚖️ مقارنة الطرق":
     st.header("2️⃣ مقارنة الطرق المختلفة (Full vs GA vs SelectKBest vs RFE)")
     path = os.path.join(OUTPUT_DIR, "comparison.csv")
@@ -81,6 +121,9 @@ elif section == "⚖️ مقارنة الطرق":
     else:
         st.warning("ملف comparison.csv غير موجود. شغّل الخوارزمية أولاً.")
 
+# ---------------------------
+# الرسوم البيانية
+# ---------------------------
 elif section == "📈 الرسوم البيانية":
     st.header("3️⃣ الرسوم البيانية")
     plots_info = {
@@ -105,6 +148,9 @@ elif section == "📈 الرسوم البيانية":
                     else:
                         st.warning(f"الصورة {img_file} غير موجود. شغّل الخوارزمية أولاً.")
 
+# ---------------------------
+# الميزات المختارة
+# ---------------------------
 elif section == "✨ الميزات المختارة":
     st.header("4️⃣ الميزات المختارة بالخوارزمية الجينية")
     path = os.path.join(OUTPUT_DIR, "selected_features.json")
@@ -116,7 +162,9 @@ elif section == "✨ الميزات المختارة":
     else:
         st.warning("ملف selected_features.json غير موجود. شغّل الخوارزمية أولاً.")
 
-
+# ---------------------------
+# الملاحظات في الشريط الجانبي
+# ---------------------------
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
 #### 📘 ملاحظات:
