@@ -3,18 +3,16 @@ import pandas as pd
 import os
 import json
 import subprocess
+import sys
 
 # ==========================
 # Page Configuration
 # ==========================
 st.set_page_config(
     page_title="BIA601 - Genetic Algorithm Feature Selection",
-    layout="wide",
+    layout="wide"
 )
 
-# ==========================
-# Output Directory
-# ==========================
 OUTPUT_DIR = "outputs"
 
 # ==========================
@@ -32,15 +30,15 @@ required_files = [
 missing_files = [f for f in required_files if not os.path.exists(os.path.join(OUTPUT_DIR, f))]
 
 if missing_files:
-    st.warning("بعض الملفات مفقودة، سيتم تشغيل ga_core.py لتوليدها تلقائيًا...")
-    try:
-        subprocess.run(["python", "ga_core.py"], check=True)
-        st.success("✅ تم تشغيل ga_core.py وإنشاء جميع الملفات المطلوبة بنجاح!")
-    except Exception as e:
-        st.error(f"❌ حدث خطأ أثناء تشغيل ga_core.py: {e}")
+    with st.spinner("⚡ جاري توليد الملفات المطلوبة باستخدام ga_core.py... يرجى الانتظار"):
+        try:
+            subprocess.run([sys.executable, "ga_core.py"], check=True)
+            st.success("✅ تم توليد جميع الملفات بنجاح!")
+        except Exception as e:
+            st.error(f"❌ حدث خطأ أثناء تشغيل ga_core.py: {e}")
 
 # ==========================
-# Custom CSS for better visuals
+# Custom CSS for nice visuals
 # ==========================
 st.markdown("""
 <style>
@@ -84,84 +82,7 @@ if section == "🏁 الصفحة الرئيسية":
     """, unsafe_allow_html=True)
 
 # ==========================
-# 1️⃣ Results Before & After GA
+# Results Before & After
 # ==========================
 elif section == "📊 النتائج قبل وبعد":
-    st.markdown("## 1️⃣ نتائج قبل وبعد تطبيق الخوارزمية الجينية", unsafe_allow_html=True)
-    before_after_path = os.path.join(OUTPUT_DIR, "before_after.csv")
-    if os.path.exists(before_after_path):
-        df_before_after = pd.read_csv(before_after_path)
-        st.dataframe(df_before_after.style.format({"Score": "{:.4f}"}))
-    else:
-        st.warning("ملف before_after.csv غير موجود.")
-
-# ==========================
-# 2️⃣ Comparison Between Methods
-# ==========================
-elif section == "⚖️ مقارنة الطرق":
-    st.markdown("## 2️⃣ مقارنة الطرق المختلفة (Full vs GA vs SelectKBest vs RFE)", unsafe_allow_html=True)
-    comparison_path = os.path.join(OUTPUT_DIR, "comparison.csv")
-    if os.path.exists(comparison_path):
-        df_comparison = pd.read_csv(comparison_path)
-        st.dataframe(df_comparison.style.format({"CV_Score": "{:.4f}"}))
-    else:
-        st.warning("ملف comparison.csv غير موجود.")
-
-# ==========================
-# 3️⃣ Graphs
-# ==========================
-elif section == "📈 الرسوم البيانية":
-    st.markdown("## 3️⃣ الرسوم البيانية", unsafe_allow_html=True)
-    
-    plots_info = {
-        "ga_evolution.png": "تطور Fitness عبر الأجيال",
-        "score_comparison.png": "مقارنة الدرجات بين الطرق",
-        "features_count.png": "عدد الميزات في كل طريقة"
-    }
-
-    selected_plots = st.multiselect(
-        "اختر الرسوم البيانية التي تريد عرضها:",
-        options=list(plots_info.keys()),
-        default=list(plots_info.keys())
-    )
-
-    if selected_plots:
-        cols = st.columns(len(selected_plots))
-        for col, img_file in zip(cols, selected_plots):
-            img_path = os.path.join(OUTPUT_DIR, img_file)
-            caption = plots_info[img_file]
-            with col:
-                if os.path.exists(img_path):
-                    st.image(img_path, caption=caption, use_container_width=True)
-                else:
-                    st.warning(f"الصورة {img_file} غير موجود.")
-
-# ==========================
-# 4️⃣ Selected Features by GA
-# ==========================
-elif section == "✨ الميزات المختارة":
-    st.markdown("## 4️⃣ الميزات المختارة بالخوارزمية الجينية", unsafe_allow_html=True)
-    features_path = os.path.join(OUTPUT_DIR, "selected_features.json")
-    if os.path.exists(features_path):
-        with open(features_path, "r", encoding="utf-8") as f:
-            selected_features = json.load(f)
-        st.success(f"✅ تم اختيار {len(selected_features)} ميزة من أصل مجموعة الميزات الكاملة.")
-        st.write(selected_features)
-    else:
-        st.warning("ملف selected_features.json غير موجود.")
-
-# ==========================
-# Footer Notes
-# ==========================
-st.sidebar.markdown("---")
-st.sidebar.markdown("""
-<div style="padding:10px; background-color:#F1FAEE; border-radius:10px; color:#1D3557;">
-<h4>📘 ملاحظات:</h4>
-<ul>
-<li>تم تنفيذ الخوارزمية الجينية لاختيار الميزات المثلى باستخدام نموذج التصنيف (Decision Tree أو Logistic Regression).</li>
-<li>تم مقارنة النتائج مع خوارزميات تقليدية (RFE, SelectKBest).</li>
-<li>جميع الرسوم والجداول تم توليدها آليًا من كود <b>ga_core.py</b>.</li>
-</ul>
-<p>© 2025 — مشروع مادة BIA601 | إعداد مجموعة طلاب المادة بإشراف د. عصام سلمان</p>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown("## 1️⃣ نتائج قبل
