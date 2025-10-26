@@ -16,42 +16,42 @@ st.set_page_config(
 )
 
 # ---------------------------
-# CSS لتصميم RTL وألوان مريحة للعين
+# CSS عصري، RTL، ألوان دافئة ومريحة
 # ---------------------------
 st.markdown("""
 <style>
 /* RTL direction */
 body, .block-container {direction: rtl; text-align: right;}
 
-/* خلفية عامة */
-body {background-color: #F7F9FB; color: #212529; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+/* خلفية الصفحة */
+body {background-color: #FDF6F0; color: #333333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
 
 /* العناوين */
-h1, h2, h3 {color: #0D3B66; text-align: right;}
+h1, h2, h3 {color: #2C3E50; font-weight: bold; text-align: right;}
 
 /* النصوص العادية */
-p, li {color: #1D3557; font-size: 16px; line-height: 1.6;}
+p, li {color: #333333; font-size: 16px; line-height: 1.6;}
 
-/* أزرار */
+/* الأزرار */
 .stButton>button {
-    background-color: #1D3557;
-    color: #F1FAEE;
-    border-radius: 8px;
+    background-color: #E76F51;
+    color: white;
+    border-radius: 10px;
     padding: 0.6em 1.2em;
     font-weight: bold;
     transition: all 0.2s ease-in-out;
 }
 .stButton>button:hover {
-    background-color: #457B9D;
-    color: #F1FAEE;
+    background-color: #FF8C61;
+    color: white;
 }
 
 /* جداول */
-.stDataFrame th {background-color: #A8DADC; color: #1D3557; text-align: center;}
-.stDataFrame td {background-color: #E6F0F3; color: #1D3557; text-align: center;}
+.stDataFrame th {background-color: #F4A261; color: #2C3E50; text-align: center; font-weight: bold;}
+.stDataFrame td {background-color: #FFF5EE; color: #2C3E50; text-align: center;}
 
 /* expanders */
-.stExpanderHeader {font-weight: bold; color: #0D3B66;}
+.stExpanderHeader {font-weight: bold; color: #2C3E50;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -61,7 +61,8 @@ p, li {color: #1D3557; font-size: 16px; line-height: 1.6;}
 st.sidebar.title("🧬 مشروع BIA601")
 section = st.sidebar.radio(
     "اختر القسم الذي تريد عرضه:",
-    ("🏁 الصفحة الرئيسية", "📊 النتائج قبل وبعد", "⚖️ مقارنة الطرق", "📈 الرسوم البيانية", "✨ الميزات المختارة", "⚡ تشغيل الخوارزمية")
+    ("🏁 الصفحة الرئيسية", "📊 النتائج قبل وبعد", "⚖️ مقارنة الطرق",
+     "📈 الرسوم البيانية", "✨ الميزات المختارة", "⚡ تشغيل الخوارزمية")
 )
 
 # ---------------------------
@@ -69,7 +70,7 @@ section = st.sidebar.radio(
 # ---------------------------
 if section == "🏁 الصفحة الرئيسية":
     st.markdown("""
-    <div style="padding:20px; background-color:#E3F2FD; border-radius:12px;">
+    <div style="padding:20px; background-color:#FFF5EE; border-radius:12px;">
         <h1>🧬 مشروع BIA601 — اختيار الميزات باستخدام الخوارزمية الجينية</h1>
         <p>
         هذا التطبيق يعرض نتائج تطبيق <b>الخوارزمية الجينية لاختيار الميزات</b> مقارنة بالطرق التقليدية
@@ -84,21 +85,20 @@ if section == "🏁 الصفحة الرئيسية":
 # ---------------------------
 elif section == "⚡ تشغيل الخوارزمية":
     st.header("⚡ تشغيل الخوارزمية الجينية")
-    with st.container():
-        if st.button("تشغيل ga_core.py"):
-            with st.spinner("⚡ جاري التنفيذ... يرجى الانتظار"):
-                try:
-                    result = subprocess.run(
-                        [sys.executable, "ga_core.py"],
-                        capture_output=True, text=True
-                    )
-                    if result.returncode == 0:
-                        st.success("✅ انتهى التنفيذ بنجاح! جميع الملفات موجودة في 'outputs/'.")
-                    else:
-                        st.error("❌ حدث خطأ أثناء تنفيذ ga_core.py")
-                        st.text_area("تفاصيل الخطأ:", result.stderr, height=200)
-                except Exception as e:
-                    st.error(f"❌ خطأ غير متوقع: {e}")
+    if st.button("تشغيل ga_core.py"):
+        with st.spinner("⚡ جاري التنفيذ... يرجى الانتظار"):
+            try:
+                result = subprocess.run(
+                    [sys.executable, "ga_core.py"],
+                    capture_output=True, text=True
+                )
+                if result.returncode == 0:
+                    st.success("✅ انتهى التنفيذ بنجاح! جميع الملفات موجودة في 'outputs/'.")
+                else:
+                    st.error("❌ حدث خطأ أثناء تنفيذ ga_core.py")
+                    st.text_area("تفاصيل الخطأ:", result.stderr, height=200)
+            except Exception as e:
+                st.error(f"❌ خطأ غير متوقع: {e}")
 
 # ---------------------------
 # النتائج قبل وبعد
