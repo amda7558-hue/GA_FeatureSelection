@@ -20,16 +20,18 @@ st.set_page_config(
 # ---------------------------
 st.markdown("""
 <style>
-/* RTL direction */
+/* RTL */
 body, .block-container {direction: rtl; text-align: right;}
 
-/* خلفية الصفحة */
-body {background-color: #FDF6F0; color: #333333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+/* الخلفية العامة */
+body, .stApp, .block-container {
+    background-color: #FDF6F0 !important;
+}
 
 /* العناوين */
 h1, h2, h3 {color: #2C3E50; font-weight: bold; text-align: right;}
 
-/* النصوص العادية */
+/* النصوص */
 p, li {color: #333333; font-size: 16px; line-height: 1.6;}
 
 /* الأزرار */
@@ -39,7 +41,6 @@ p, li {color: #333333; font-size: 16px; line-height: 1.6;}
     border-radius: 10px;
     padding: 0.6em 1.2em;
     font-weight: bold;
-    transition: all 0.2s ease-in-out;
 }
 .stButton>button:hover {
     background-color: #FF8C61;
@@ -50,10 +51,11 @@ p, li {color: #333333; font-size: 16px; line-height: 1.6;}
 .stDataFrame th {background-color: #F4A261; color: #2C3E50; text-align: center; font-weight: bold;}
 .stDataFrame td {background-color: #FFF5EE; color: #2C3E50; text-align: center;}
 
-/* expanders */
+/* Expanders */
 .stExpanderHeader {font-weight: bold; color: #2C3E50;}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------------------
 # الشريط الجانبي
