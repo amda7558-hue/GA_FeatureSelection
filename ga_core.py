@@ -17,11 +17,10 @@ from sklearn.metrics import make_scorer, f1_score
 warnings.filterwarnings("ignore")
 print("Libraries loaded successfully ✅")
 
-# =================== CONFIGURATION ===================
 CONFIG = {
-    "DATA_PATH": "breast_cancer_wisconsin.csv",  # غيّر المسار حسب اسم ملفك
-    "MODEL_NAME": "logreg",                      # أو "dt"
-    "METRIC": "accuracy",                        # "accuracy" أو "f1"
+    "DATA_PATH": "breast_cancer_wisconsin.csv",
+    "MODEL_NAME": "logreg",
+    "METRIC": "accuracy",
     "CV_SPLITS": 5,
     "RANDOM_STATE": 42,
     "POP_SIZE": 30,
@@ -43,7 +42,6 @@ def get_scorer(metric: str):
 
 SCORER = get_scorer(CONFIG["METRIC"])
 
-# =================== DATA PREPARATION ===================
 def prepare_X_y(df: pd.DataFrame):
     # اكتشاف العمود الهدف تلقائياً
     target_col = None
@@ -85,7 +83,7 @@ df = pd.read_csv(CONFIG["DATA_PATH"])
 X, y, target_col = prepare_X_y(df)
 print(f"✅ Data loaded: X={X.shape}, y={y.shape}, target='{target_col}'")
 
-# =================== GA CLASSES & FUNCTIONS ===================
+# GA CLASSES & FUNCTIONS
 @dataclass
 class GAConfig:
     pop_size: int
@@ -206,7 +204,7 @@ best_mask, best_fit, hist = run_ga(X, y, cfg)
 selected_cols = X.columns[best_mask].tolist()
 print(f"✅ Selected {len(selected_cols)} features out of {X.shape[1]}")
 
-# =================== EVALUATION ===================
+# EVALUATION
 def cv_score(model, X, y, scorer, cv_splits=5, seed=42):
     cv = StratifiedKFold(n_splits=cv_splits, shuffle=True, random_state=seed)
     return cross_val_score(model, X, y, cv=cv, scoring=scorer).mean()
@@ -243,7 +241,7 @@ comparison = pd.DataFrame({
 
 mask_df = pd.DataFrame({"feature": X.columns, "selected": [bool(m) for m in best_mask]})
 
-# =================== SAVE OUTPUTS ===================
+# SAVE OUTPUTS
 os.makedirs("outputs", exist_ok=True)
 before_after.to_csv("outputs/before_after.csv", index=False)
 comparison.to_csv("outputs/comparison.csv", index=False)
