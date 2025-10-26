@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import json
+import subprocess
 
 # ==========================
 # Page Configuration
@@ -12,46 +13,42 @@ st.set_page_config(
 )
 
 # ==========================
+# Output Directory
+# ==========================
+OUTPUT_DIR = "outputs"
+
+# ==========================
+# Check required files
+# ==========================
+required_files = [
+    "before_after.csv",
+    "comparison.csv",
+    "selected_features.json",
+    "ga_evolution.png",
+    "score_comparison.png",
+    "features_count.png"
+]
+
+missing_files = [f for f in required_files if not os.path.exists(os.path.join(OUTPUT_DIR, f))]
+
+if missing_files:
+    st.warning("بعض الملفات مفقودة، سيتم تشغيل ga_core.py لتوليدها تلقائيًا...")
+    try:
+        subprocess.run(["python", "ga_core.py"], check=True)
+        st.success("✅ تم تشغيل ga_core.py وإنشاء جميع الملفات المطلوبة بنجاح!")
+    except Exception as e:
+        st.error(f"❌ حدث خطأ أثناء تشغيل ga_core.py: {e}")
+
+# ==========================
 # Custom CSS for better visuals
 # ==========================
 st.markdown("""
 <style>
-/* General font and background */
-body {
-    background-color: #F9F9F9;
-    color: #222222;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Sidebar styling */
-.css-1d391kg {  /* This class may change with Streamlit updates */
-    background-color: #E8F0F2;
-    padding: 1rem;
-}
-
-/* Table styling */
-.dataframe th {
-    background-color: #A8DADC;
-    color: #1D3557;
-    text-align: center;
-}
-
-.dataframe td {
-    background-color: #F1FAEE;
-    color: #1D3557;
-    text-align: center;
-}
-
-/* Headings */
-h1, h2, h3, h4 {
-    color: #1D3557;
-}
-
-/* Success messages */
-.stAlert>div>div>div>div {
-    background-color: #C1F0C1 !important;
-    color: #1B3B1B !important;
-}
+body {background-color: #F9F9F9; color: #222222; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+.dataframe th {background-color: #A8DADC; color: #1D3557; text-align: center;}
+.dataframe td {background-color: #F1FAEE; color: #1D3557; text-align: center;}
+h1, h2, h3, h4 {color: #1D3557;}
+.stAlert>div>div>div>div {background-color: #C1F0C1 !important; color: #1B3B1B !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -70,11 +67,6 @@ section = st.sidebar.radio(
     "اختر القسم الذي تريد عرضه:",
     ("🏁 الصفحة الرئيسية", "📊 النتائج قبل وبعد", "⚖️ مقارنة الطرق", "📈 الرسوم البيانية", "✨ الميزات المختارة")
 )
-
-# ==========================
-# Output Directory
-# ==========================
-OUTPUT_DIR = "outputs"
 
 # ==========================
 # Home Section
@@ -101,7 +93,7 @@ elif section == "📊 النتائج قبل وبعد":
         df_before_after = pd.read_csv(before_after_path)
         st.dataframe(df_before_after.style.format({"Score": "{:.4f}"}))
     else:
-        st.warning("ملف before_after.csv غير موجود. تأكد من تشغيل ga_core.py أولاً.")
+        st.warning("ملف before_after.csv غير موجود.")
 
 # ==========================
 # 2️⃣ Comparison Between Methods
@@ -133,15 +125,16 @@ elif section == "📈 الرسوم البيانية":
         default=list(plots_info.keys())
     )
 
-    cols = st.columns(len(selected_plots))
-    for col, img_file in zip(cols, selected_plots):
-        img_path = os.path.join(OUTPUT_DIR, img_file)
-        caption = plots_info[img_file]
-        with col:
-            if os.path.exists(img_path):
-                st.image(img_path, caption=caption, use_container_width=True)
-            else:
-                st.warning(f"الصورة {img_file} غير موجود.")
+    if selected_plots:
+        cols = st.columns(len(selected_plots))
+        for col, img_file in zip(cols, selected_plots):
+            img_path = os.path.join(OUTPUT_DIR, img_file)
+            caption = plots_info[img_file]
+            with col:
+                if os.path.exists(img_path):
+                    st.image(img_path, caption=caption, use_container_width=True)
+                else:
+                    st.warning(f"الصورة {img_file} غير موجود.")
 
 # ==========================
 # 4️⃣ Selected Features by GA
@@ -155,7 +148,7 @@ elif section == "✨ الميزات المختارة":
         st.success(f"✅ تم اختيار {len(selected_features)} ميزة من أصل مجموعة الميزات الكاملة.")
         st.write(selected_features)
     else:
-        st.warning("لم يتم العثور على ملف selected_features.json")
+        st.warning("ملف selected_features.json غير موجود.")
 
 # ==========================
 # Footer Notes
