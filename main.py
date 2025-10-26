@@ -7,33 +7,24 @@ import sys
 
 OUTPUT_DIR = "outputs"
 
-# ---------------------------
-# إعدادات الصفحة
-# ---------------------------
 st.set_page_config(
     page_title="BIA601 - Genetic Algorithm Feature Selection",
     layout="wide",
     page_icon="🧬"
 )
 
-# ---------------------------
-# CSS عصري ومحسن
-# ---------------------------
 st.markdown("""
 <style>
-/* RTL وتصميم عام */
 body, .block-container {
     direction: rtl;
     text-align: right;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* خلفية متدرجة أنيقة */
 .stApp {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* الحاوية الرئيسية */
 .main .block-container {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
@@ -44,7 +35,6 @@ body, .block-container {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* العناوين */
 h1 {
     background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
     -webkit-background-clip: text;
@@ -68,7 +58,6 @@ h3 {
     padding-bottom: 10px;
 }
 
-/* الأزرار المحسنة */
 .stButton>button {
     background: linear-gradient(45deg, #E76F51, #F4A261);
     color: white;
@@ -88,7 +77,6 @@ h3 {
     background: linear-gradient(45deg, #FF8C61, #F4A261);
 }
 
-/* الشريط الجانبي */
 .css-1d391kg, .css-1lcbmhc {
     background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%);
 }
@@ -97,7 +85,6 @@ h3 {
     background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%);
 }
 
-/* Radio buttons محسنة */
 .stRadio > div {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
@@ -118,7 +105,6 @@ h3 {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* الجداول */
 .stDataFrame {
     border-radius: 15px;
     overflow: hidden;
@@ -140,7 +126,6 @@ h3 {
     border-bottom: 1px solid #BDC3C7;
 }
 
-/* Expanders */
 .streamlit-expanderHeader {
     background: linear-gradient(45deg, #34495E, #2C3E50);
     color: white !important;
@@ -156,13 +141,11 @@ h3 {
     padding: 20px;
 }
 
-/* Multiselect */
 .stMultiSelect > div > div {
     border-radius: 10px;
     border: 2px solid #3498DB;
 }
 
-/* الرسائل */
 .stSuccess {
     background: linear-gradient(45deg, #27AE60, #2ECC71);
     color: white;
@@ -187,12 +170,10 @@ h3 {
     text-align: center;
 }
 
-/* Spinner */
 .stSpinner > div {
     border-color: #E76F51 transparent transparent transparent;
 }
 
-/* الكروت - ألوان محسنة للقراءة */
 .card {
     background: rgba(255, 255, 255, 0.95);
     padding: 20px;
@@ -224,7 +205,6 @@ h3 {
     margin-bottom: 0;
 }
 
-/* كرت الدقة - لون أخضر غامق */
 .card-accuracy {
     border-left-color: #27AE60;
     background: linear-gradient(135deg, #ffffff 0%, #E8F8F5 100%);
@@ -234,7 +214,6 @@ h3 {
     color: #27AE60;
 }
 
-/* كرت الكفاءة - لون أزرق غامق */
 .card-efficiency {
     border-left-color: #2980B9;
     background: linear-gradient(135deg, #ffffff 0%, #EBF5FB 100%);
@@ -244,7 +223,6 @@ h3 {
     color: #2980B9;
 }
 
-/* كرت المقارنة - لون بنفسجي غامق */
 .card-comparison {
     border-left-color: #8E44AD;
     background: linear-gradient(135deg, #ffffff 0%, #F4ECF7 100%);
@@ -254,7 +232,6 @@ h3 {
     color: #8E44AD;
 }
 
-/* كرت التصور - لون برتقالي غامق */
 .card-visualization {
     border-left-color: #E67E22;
     background: linear-gradient(135deg, #ffffff 0%, #FEF9E7 100%);
@@ -267,9 +244,6 @@ h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------------------
-# الشريط الجانبي المحسن
-# ---------------------------
 with st.sidebar:
     st.markdown("""
     <div style='text-align:center; padding:20px 0;'>
@@ -309,9 +283,6 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------------------
-# الصفحة الرئيسية المحسنة
-# ---------------------------
 if section == "🏠 الصفحة الرئيسية":
     col1, col2, col3 = st.columns([1, 2, 1])
     
@@ -323,7 +294,6 @@ if section == "🏠 الصفحة الرئيسية":
         </div>
         """, unsafe_allow_html=True)
     
-    # كروت المعلومات - بألوان محسنة للقراءة
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -358,9 +328,6 @@ if section == "🏠 الصفحة الرئيسية":
         </div>
         """, unsafe_allow_html=True)
 
-# ---------------------------
-# تشغيل الخوارزمية - محسن
-# ---------------------------
 elif section == "⚡ تشغيل الخوارزمية":
     st.header("⚡ تشغيل الخوارزمية الجينية")
     
@@ -394,9 +361,6 @@ elif section == "⚡ تشغيل الخوارزمية":
                 except Exception as e:
                     st.error(f"❌ خطأ غير متوقع: {e}")
 
-# ---------------------------
-# النتائج قبل وبعد - محسن
-# ---------------------------
 elif section == "📊 النتائج قبل وبعد":
     st.header("📊 النتائج قبل وبعد تطبيق الخوارزمية الجينية")
     
@@ -404,7 +368,6 @@ elif section == "📊 النتائج قبل وبعد":
     if os.path.exists(path):
         df = pd.read_csv(path)
         
-        # عرض إحصاءات سريعة
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -432,9 +395,6 @@ elif section == "📊 النتائج قبل وبعد":
         يرجى تشغيل الخوارزمية أولاً من قسم '⚡ تشغيل الخوارزمية'
         """)
 
-# ---------------------------
-# مقارنة الطرق - محسن
-# ---------------------------
 elif section == "⚖️ مقارنة الطرق":
     st.header("⚖️ مقارنة أداء الطرق المختلفة")
     
@@ -442,7 +402,6 @@ elif section == "⚖️ مقارنة الطرق":
     if os.path.exists(path):
         df = pd.read_csv(path)
         
-        # إيجاد أفضل طريقة
         best_method = df.loc[df['CV_Score'].idxmax()]
         
         st.markdown(f"""
@@ -453,7 +412,6 @@ elif section == "⚖️ مقارنة الطرق":
         """, unsafe_allow_html=True)
         
         with st.expander("📊 جدول المقارنة الكامل", expanded=True):
-            # تلوين الصفوف
             def highlight_max(s):
                 is_max = s == s.max()
                 return ['background: linear-gradient(45deg, #27AE60, #2ECC71); color: white' if v else '' for v in is_max]
@@ -470,9 +428,6 @@ elif section == "⚖️ مقارنة الطرق":
         يرجى تشغيل الخوارزمية أولاً من قسم '⚡ تشغيل الخوارزمية'
         """)
 
-# ---------------------------
-# الرسوم البيانية - محسن
-# ---------------------------
 elif section == "📈 الرسوم البيانية":
     st.header("📈 التصورات البيانية للنتائج")
     
@@ -493,7 +448,6 @@ elif section == "📈 الرسوم البيانية":
         )
         
         if selected_plots:
-            # ترتيب الصور في شبكة متجاوبة
             cols_per_row = 2
             for i in range(0, len(selected_plots), cols_per_row):
                 cols = st.columns(cols_per_row)
@@ -513,9 +467,6 @@ elif section == "📈 الرسوم البيانية":
         يرجى تشغيل الخوارزمية أولاً من قسم '⚡ تشغيل الخوارزمية'
         """)
 
-# ---------------------------
-# الميزات المختارة - محسن  
-# ---------------------------
 elif section == "✨ الميزات المختارة":
     st.header("✨ الميزات المختارة بالخوارزمية الجينية")
     
@@ -532,7 +483,6 @@ elif section == "✨ الميزات المختارة":
         """, unsafe_allow_html=True)
         
         with st.expander("📋 عرض قائمة الميزات المختارة", expanded=True):
-            # عرض الميزات في كروت
             cols = st.columns(3)
             for idx, feature in enumerate(features):
                 with cols[idx % 3]:
@@ -555,13 +505,10 @@ elif section == "✨ الميزات المختارة":
         يرجى تشغيل الخوارزمية أولاً من قسم '⚡ تشغيل الخوارزمية'
         """)
 
-# ---------------------------
-# التذييل
-# ---------------------------
 st.markdown("""
 <div style='text-align:center; margin-top:50px; padding:20px; background:rgba(52, 73, 94, 0.1); border-radius:10px;'>
     <p style='color:#7F8C8D; margin:0;'>
-    © 2025 — مشروع مادة BIA601 | إعداد مجموعة طلاب المادة بإشراف د. عصام سلمان
+    © 2025 — مشروع مادة BIA601 | بإشراف د. عصام سلمان
     </p>
 </div>
 """, unsafe_allow_html=True)
